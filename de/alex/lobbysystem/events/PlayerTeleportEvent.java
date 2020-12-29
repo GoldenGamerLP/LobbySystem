@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -25,18 +24,19 @@ import java.util.HashMap;
 
 public class PlayerTeleportEvent implements Listener {
 
-
     public static HashMap<Player, Boolean> list = new HashMap<>();
     public int timertime = 3;
 
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerTeleport(org.bukkit.event.player.PlayerTeleportEvent event) {
+
         Player p = event.getPlayer();
-        BossBar bs = utils.createBossbar("countdown", BarColor.WHITE, BarStyle.SOLID);
         Location to = event.getTo();
         Location is = event.getFrom();
+        BossBar bs = utils.createBossbar("countdown", BarColor.WHITE, BarStyle.SOLID);
+
         if (event.getCause() == org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.SPECTATE) {
-            if (p.getLocation().getBlock().getLocation().distance(to.getBlock().getLocation()) >= 1.5) {
+            if (p.getLocation().getBlock().getLocation().distance(to.getBlock().getLocation()) >= 1) {
                 if (list.containsKey(p)) {
                     p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(utils.colorString("&9Lobby &8» &7Du wirst schon teleportiert!")));
                     event.setCancelled(true);
@@ -44,8 +44,9 @@ public class PlayerTeleportEvent implements Listener {
                     bs.removeAll();
                 } else {
                     list.put(p, true);
-                    event.setTo(is);
+                    event.setCancelled(true);
                     bs.addPlayer(p);
+
                     new BukkitRunnable() {
                         int time = 0;
 
@@ -70,7 +71,7 @@ public class PlayerTeleportEvent implements Listener {
                                 bs.removePlayer(p);
                                 teleportPlayer(p, to);
                                 bs.removeAll();
-                                cancel();
+                                this.cancel();
                             }
                             bs.setProgress(percentage);
                             time = time + 1;
@@ -99,12 +100,6 @@ public class PlayerTeleportEvent implements Listener {
             }
         }.runTaskLater(Main.getInstance(), 40);
         list.remove(p);
-    }
-
-    @EventHandler
-    public void onTest(PlayerDropItemEvent event) {
-        event.setCancelled(true);
-        event.getPlayer().teleport(event.getPlayer().getLocation().add(0, 1, 5), org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.SPECTATE);
     }
 
 }
