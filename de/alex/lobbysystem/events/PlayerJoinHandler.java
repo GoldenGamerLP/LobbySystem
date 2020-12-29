@@ -12,13 +12,13 @@ public class PlayerJoinHandler implements Listener {
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         Player p = event.getPlayer();
-        event.setJoinMessage(String.format(utils.colorString((utils.joinMessage)),  event.getPlayer().getDisplayName()));
+        event.setJoinMessage(String.format(utils.colorString("&e» %s"), event.getPlayer().getDisplayName()));
     }
 
     @EventHandler
     public void onPlayerLeaveEvent(PlayerQuitEvent event) {
         Player p = event.getPlayer();
         PlayerTeleportEvent.list.remove(p);
-        event.setQuitMessage(String.format(utils.colorString((utils.quitMessage)),  event.getPlayer().getDisplayName()));
+        event.setQuitMessage(String.format(utils.colorString("&e« %s"), event.getPlayer().getDisplayName()));
     }
 }

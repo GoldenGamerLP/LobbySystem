@@ -1,32 +1,14 @@
 package de.alex.lobbysystem.utils;
 
-import de.alex.lobbysystem.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-
 public class utils {
-    DatabaseManager db = new DatabaseManager();
-    public static File config = new File(Main.getInstance().getDataFolder(), "config.yml");
-    public static YamlConfiguration yaml = YamlConfiguration.loadConfiguration(config);
-
-    public static String joinMessage;
-    public static String quitMessage;
-    public static Boolean useJoinLeaveMessages;
-
-    public static void reloadFiles() {
-        YamlConfiguration yml = YamlConfiguration.loadConfiguration(config);
-        joinMessage = yml.getString("options.messages.playermessages.joinMessages");
-        quitMessage = yml.getString("options.messages.playermessages.quitMessages");
-        useJoinLeaveMessages = yml.getBoolean("options.useJoinLeaveMessages");
-    }
 
     static BarFlag[] EMPTY_ARRAY = new BarFlag[0];
 

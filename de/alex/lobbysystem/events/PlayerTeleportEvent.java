@@ -26,8 +26,8 @@ import java.util.HashMap;
 public class PlayerTeleportEvent implements Listener {
 
 
-    public int timertime = 3;
     public static HashMap<Player, Boolean> list = new HashMap<>();
+    public int timertime = 3;
 
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerTeleport(org.bukkit.event.player.PlayerTeleportEvent event) {
@@ -35,7 +35,7 @@ public class PlayerTeleportEvent implements Listener {
         BossBar bs = utils.createBossbar("countdown", BarColor.WHITE, BarStyle.SOLID);
         Location to = event.getTo();
         Location is = event.getFrom();
-        if (event.getCause() == org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.PLUGIN) {
+        if (event.getCause() == org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.SPECTATE) {
             if (p.getLocation().getBlock().getLocation().distance(to.getBlock().getLocation()) >= 1.5) {
                 if (list.containsKey(p)) {
                     p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(utils.colorString("&9Lobby &8» &7Du wirst schon teleportiert!")));
