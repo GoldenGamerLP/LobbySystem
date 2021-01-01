@@ -1,9 +1,6 @@
 package de.alex.lobbysystem.main;
 
-import de.alex.lobbysystem.events.HealthChangeEvent;
-import de.alex.lobbysystem.events.PlayerFoodLevelChange;
-import de.alex.lobbysystem.events.PlayerJoinHandler;
-import de.alex.lobbysystem.events.PlayerTeleportEvent;
+import de.alex.lobbysystem.events.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,6 +23,9 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerJoinHandler(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerFoodLevelChange(), this);
         Bukkit.getPluginManager().registerEvents(new HealthChangeEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new MobSpawingEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new JumppadPressurePlateEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerFlightToggleEvent(), this);
     }
 
 }
