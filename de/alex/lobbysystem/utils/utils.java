@@ -10,7 +10,8 @@ import org.bukkit.entity.Player;
 
 public class utils {
 
-    static BarFlag[] EMPTY_ARRAY = new BarFlag[0];
+
+    static final BarFlag[] EMPTY_ARRAY = new BarFlag[0];
 
     public static BossBar createBossbar(String title, org.bukkit.boss.BarColor ch, BarStyle style) {
         BossBar bs = Bukkit.createBossBar(title, ch, style, EMPTY_ARRAY);
@@ -26,5 +27,14 @@ public class utils {
 
     public static String colorString(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
+    }
+
+    public static Boolean permissionMSG(String perm, Player p) {
+        if (p.hasPermission(perm)) {
+            return true;
+        } else {
+            p.sendMessage(utils.colorString(String.format("&9Lobby &8» &cDazu hast du keine Berechtigung! &7(&e%s&7)", perm)));
+            return false;
+        }
     }
 }

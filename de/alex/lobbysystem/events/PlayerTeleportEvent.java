@@ -16,7 +16,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -26,8 +25,8 @@ import java.util.HashMap;
 
 public class PlayerTeleportEvent implements Listener {
 
-    public static HashMap<Player, Boolean> list = new HashMap<>();
-    public int timertime = 3;
+    public static final HashMap<Player, Boolean> list = new HashMap<>();
+    public final int timertime = 3;
 
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerTeleport(org.bukkit.event.player.PlayerTeleportEvent event) {
@@ -38,6 +37,7 @@ public class PlayerTeleportEvent implements Listener {
         BossBar bs = utils.createBossbar("countdown", BarColor.WHITE, BarStyle.SOLID);
 
         if (event.getCause() == org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.SPECTATE) {
+            assert to != null;
             if (p.getLocation().getBlock().getLocation().distance(to.getBlock().getLocation()) >= 1) {
                 if (list.containsKey(p)) {
                     p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(utils.colorString("&9Lobby &8» &7Du wirst schon teleportiert!")));
@@ -89,7 +89,6 @@ public class PlayerTeleportEvent implements Listener {
                 p.sendMessage(utils.colorString("&9Lobby &8» &7Du bist zu &cnah&7 am Entpunkt der Teleportations."));
             }
         }
-        return;
     }
 
     private void teleportPlayer(Player p, Location loc) {
@@ -110,7 +109,7 @@ public class PlayerTeleportEvent implements Listener {
     @EventHandler
     public void onLaura(PlayerDropItemEvent event) {
         event.setCancelled(true);
-        event.getPlayer().teleport(event.getPlayer().getLocation().add(0,2,5), org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.SPECTATE);
+        event.getPlayer().teleport(event.getPlayer().getLocation().add(0, 2, 5), org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.SPECTATE);
     }
 
 }
