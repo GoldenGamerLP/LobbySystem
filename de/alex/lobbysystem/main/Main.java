@@ -1,9 +1,12 @@
 package de.alex.lobbysystem.main;
 
+import de.alex.lobbysystem.BukkitScheduler.InventoryScheduler;
 import de.alex.lobbysystem.commands.BuildCommand;
 import de.alex.lobbysystem.commands.FlyCommand;
 import de.alex.lobbysystem.commands.PositionCommand;
 import de.alex.lobbysystem.events.*;
+import de.alex.lobbysystem.manager.TablistManager;
+import de.alex.lobbysystem.utils.utils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
@@ -18,6 +21,7 @@ public class Main extends JavaPlugin {
     private static Main instance;
 
     public File locationfile = new File(this.getDataFolder(), "locations.yml");
+    public File compassfile = new File(this.getDataFolder(), "compass.yml");
 
     public static Main getInstance() {
         return instance;
@@ -28,6 +32,7 @@ public class Main extends JavaPlugin {
         instance = this;
         initListeners();
         initFiles(locationfile);
+        initFiles(compassfile);
         getLogger().info(String.format("Lobby: Startup wihtout errors in %o ms!", System.currentTimeMillis() - ms));
     }
 
@@ -58,9 +63,12 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new JumppadPressurePlateEvent(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerFlightToggleEvent(), this);
         Bukkit.getPluginManager().registerEvents(new BlockEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerInteractEvent(), this);
+        //Bukkit.getPluginManager().registerEvents(new TablistManager(), this);
         this.getCommand("fly").setExecutor(new FlyCommand());
         this.getCommand("build").setExecutor(new BuildCommand());
         this.getCommand("position").setExecutor(new PositionCommand());
+        InventoryScheduler.initInventory();
     }
 
     public void initPlayer(Player p) {
@@ -72,6 +80,8 @@ public class Main extends JavaPlugin {
         p.setLevel(0);
         p.setAllowFlight(true);
         p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.125);
+        p.getInventory().setHeldItemSlot(5);
+        p.getInventory().setItem(5, utils.compass);
     }
 
 }

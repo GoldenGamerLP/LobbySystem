@@ -1,5 +1,6 @@
 package de.alex.lobbysystem.commands;
 
+import de.alex.lobbysystem.enums.Permissions;
 import de.alex.lobbysystem.main.Main;
 import de.alex.lobbysystem.utils.utils;
 import org.bukkit.Location;
@@ -20,7 +21,7 @@ public class PositionCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            if (utils.permissionMSG("lobby.position.cmd", p)) {
+            if (utils.permissionMSG(Permissions.PositionCommand.name(), p)) {
                 if (args.length == 0) {
                     p.sendMessage(utils.colorString("&7 \n &9Lobby &8» &e&lPositions \n &7» &a/positions &2list \n &7» &a/positions &2set <name> \n &7» &a/positions &2remove \n &7» &a/positions &2tp <name>"));
                 } else switch (args[0].toLowerCase()) {

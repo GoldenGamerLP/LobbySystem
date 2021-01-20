@@ -16,11 +16,7 @@ public class PositionAPI {
 
     public Location getLocation(@Nonnull String name) {
         if (Main.getInstance().locationfile.exists()) {
-            if (yml.get("Location." + name.toLowerCase()) != null) {
-                return yml.getLocation("Location." + name.toLowerCase());
-
-            }
-            return null;
+            return yml.getLocation("Location." + name.toLowerCase());
         } else return null;
     }
 

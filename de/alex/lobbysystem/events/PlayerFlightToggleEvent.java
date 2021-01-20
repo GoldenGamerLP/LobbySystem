@@ -29,6 +29,7 @@ public class PlayerFlightToggleEvent implements Listener {
         Player p = event.getPlayer();
         if (list.containsKey(p) && allowDoubleJump.contains(p)) {
             event.setCancelled(true);
+            p.setFlying(false);
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(utils.colorString(String.format("&9Lobby &8» &7Du hast noch &c%d sekunden &eDoubleJump &7cooldown!", list.get(p)))));
         } else if (allowDoubleJump.contains(p)) {
             Vector v = event.getPlayer().getLocation().getDirection().multiply(10D).setY(1.1D);
@@ -62,6 +63,7 @@ public class PlayerFlightToggleEvent implements Listener {
                             //p.setAllowFlight(false);
                         } else if (cd == 0 || !allowDoubleJump.contains(p)) {
                             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(utils.colorString("&9Lobby &8» &7Du kannst wieder &eDoubleJumpen&7!")));
+                            p.setFlying(false);
                             //p.setAllowFlight(true);
                             list.remove(p);
                             this.cancel();
